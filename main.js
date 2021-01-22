@@ -16,6 +16,10 @@ client.commands.set(command.name, command);
 
 }
 
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Our app is running on port ${ PORT }`);
+});
 
 client.once('ready', () => {console.log('hello world');});
 
