@@ -43,14 +43,14 @@ if(!message.content.startsWith(prefix) || message.author.bot) return;
 	}
 	else
 	{
-	message.channel.send('invalid input');
+	message.delete();
 	
 	}
 	
 	}
 	else
 	{
-	message.channel.send('invalid input');
+	message.delete();
 	}
 	
 	
