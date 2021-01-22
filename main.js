@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
-
+var express = require('express');
+var app = express();
 const client = new Discord.Client();
 
 const prefix = '/';
