@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\commands"
   ],
-  "SelectedNode": "\\main.js",
+  "SelectedNode": "\\commands\\tuto.js",
   "PreviewInSolutionExplorer": false
 }

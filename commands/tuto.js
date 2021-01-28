@@ -40,10 +40,10 @@ module.exports = {
 	
 
 	actualtext.push('Brushstroke Dice are color-coded d10s, each color representing a result:');
-	actualtext.push(`${black}`+'ONYX (black ink) counts as nothing, ignore it when it comes up.');
-	actualtext.push(`${rose}`+'PETAL (rose ink) counts as a blossom, **or 1 success by taking 1 involvement**.');
-	actualtext.push(`${white}`+'PEARL (white ink) counts as 1 success, **or 2 successes by taking 1 involvement**.');
-	actualtext.push(`${jade}`+'JADE (teal ink) counts as 1 success and removes 1 involvement');
+	actualtext.push(`${black}`+'Black Jade counts as nothing, ignore it when it comes up.');
+	actualtext.push(`${rose}`+'Rose Jade counts as a blossom, **or 1 success by taking 1 involvement**.');
+	actualtext.push(`${white}`+'White Jade counts as 1 success, **or 2 successes by taking 1 involvement**.');
+	actualtext.push(`${jade}`+'Pure Jade counts as 1 success and removes 1 involvement, **or 2 successes if no involvement**.');
 
 
 	message.channel.send(actualtext);
