@@ -20,7 +20,7 @@ client.commands.set(command.name, command);
 client.once('ready', () => {console.log('hello world');});
 
 
-client.user.setActivity("Preserving the Balance");
+client.user.setActivity('Preserving the Balance');
 
 
 
