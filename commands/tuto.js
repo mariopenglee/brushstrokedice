@@ -1,19 +1,6 @@
-module.exports = {
-	name: 'tuto',
-	description : "tutorial",
-	execute(client, message, args)
+function tuto(client, message, args, pics)
 	{
 
-	const r1 = client.emojis.cache.find(emoji => emoji.name === "r1");
-	const r2 = client.emojis.cache.find(emoji => emoji.name === "r2");
-	const r3 = client.emojis.cache.find(emoji => emoji.name === "r3");
-	const r4 = client.emojis.cache.find(emoji => emoji.name === "r4");
-	const r5 = client.emojis.cache.find(emoji => emoji.name === "r5");
-	const r6 = client.emojis.cache.find(emoji => emoji.name === "r6");
-	const r7 = client.emojis.cache.find(emoji => emoji.name === "r7");
-	const r8 = client.emojis.cache.find(emoji => emoji.name === "r8");
-	const r9 = client.emojis.cache.find(emoji => emoji.name === "r9");
-	const r0 = client.emojis.cache.find(emoji => emoji.name === "r0");
 
 	const white = client.emojis.cache.find(emoji => emoji.name === "white");
 	const black = client.emojis.cache.find(emoji => emoji.name === "black");
@@ -21,17 +8,16 @@ module.exports = {
 	const jade = client.emojis.cache.find(emoji => emoji.name === "jade");
 
 	let lista = [' '];
-
-	lista.push(`${r1}`);
-	lista.push(`${r2}`);
-	lista.push(`${r3}`);
-	lista.push(`${r4}`);
-	lista.push(`${r5}`);
-	lista.push(`${r6}`);
-	lista.push(`${r7}`);
-	lista.push(`${r8}`);
-	lista.push(`${r9}`);
-	lista.push(`${r0}`);
+	lista.push(`${pics[1]}`);
+	lista.push(`${pics[2]}`);
+	lista.push(`${pics[3]}`);
+	lista.push(`${pics[4]}`);
+	lista.push(`${pics[5]}`);
+	lista.push(`${pics[6]}`);
+	lista.push(`${pics[7]}`);
+	lista.push(`${pics[8]}`);
+	lista.push(`${pics[9]}`);
+	lista.push(`${pics[0]}`);
 
 	let actualtext = [' '];
 
@@ -55,4 +41,10 @@ module.exports = {
 
 
 }
-}
+
+module.exports = { 
+tuto: tuto,
+ 
+
+
+};
