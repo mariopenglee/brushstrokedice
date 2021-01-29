@@ -20,10 +20,7 @@ client.commands.set(command.name, command);
 client.once('ready', () => {console.log('hello world');});
 
 
-client.user.setActivity("You", {
-  type: "STREAMING",
-  url: "https://www.google.com"
-});
+client.user.setActivity("Preserving the Balance");
 
 
 
