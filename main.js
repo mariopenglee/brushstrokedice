@@ -26,7 +26,7 @@ client.once('ready', () => {console.log('hello world');});
 
 client.on('message', message =>{
 
-client.user.setActivity('Preserving the Balance');
+client.user.setActivity('the Balance', { type: 'WATCHING' });
 
 if(!message.content.startsWith(prefix) || message.author.bot) return;
 	
