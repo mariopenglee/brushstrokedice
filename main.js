@@ -21,6 +21,8 @@ client.once('ready', () => {console.log('hello world');});
 
 client.on('message', message =>{
 if(!message.content.startsWith(prefix) || message.author.bot) return;
+	var vchannel = message.member.voice.channel;
+	
 
 	var args = message.content.slice(prefix.length).split(/ +/)
 	const command = args.shift().toLowerCase();
@@ -34,12 +36,14 @@ if(!message.content.startsWith(prefix) || message.author.bot) return;
 	
 	var argn = Number(args);
 	
-	if (argn<16)
+	if (argn<11)
 	{	
 
 	if(argn>0)
 	{
-	client.commands.get('roll').execute(client, message, argn);
+	client.commands.get('roll').execute(client, message, argn, vchannel);
+	
+
 	}
 	else
 	{

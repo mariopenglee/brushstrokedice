@@ -1,7 +1,7 @@
 module.exports = {
 	name: 'roll',
 	description: "this is a ping command",
-	execute(client, message, args)
+	execute(client, message, args, vchannel)
 	{
 
 	strarg = JSON.stringify(args);
@@ -26,7 +26,21 @@ module.exports = {
 	let results = [' '];
 	var i;
 
+	
+	vchannel.join().then(connection =>{
 
+	if(args>4)
+	{
+	const dispatcher = connection.play('./misc/rolling.mp3');
+	}
+	else
+	{
+	const dispatcher = connection.play('./misc/lessroll.mp3');
+	}
+
+	
+	}).catch(err => console.log(err));
+	
 
 		for(i = 0; i< args; i++)
 	{

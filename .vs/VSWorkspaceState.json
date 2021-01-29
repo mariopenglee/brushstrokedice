@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\commands"
+    "\\commands",
+    "\\misc"
   ],
-  "SelectedNode": "\\commands\\tuto.js",
+  "SelectedNode": "\\misc\\rolling.mp3",
   "PreviewInSolutionExplorer": false
 }
