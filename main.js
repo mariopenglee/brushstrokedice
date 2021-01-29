@@ -19,8 +19,17 @@ client.commands.set(command.name, command);
 
 client.once('ready', () => {console.log('hello world');});
 
+
+client.user.setActivity("You", {
+  type: "STREAMING",
+  url: "https://www.google.com"
+});
+
+
+
 client.on('message', message =>{
 if(!message.content.startsWith(prefix) || message.author.bot) return;
+	
 	var vchannel = message.member.voice.channel;
 	
 

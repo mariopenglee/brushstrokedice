@@ -26,10 +26,11 @@ module.exports = {
 	let results = [' '];
 	var i;
 
-	
-	vchannel.join().then(connection =>{
+	if(vchannel)
+	{
+vchannel.join().then(connection =>{
 
-	if(args>4)
+	if(args>5)
 	{
 	const dispatcher = connection.play('./misc/rolling.mp3');
 	}
@@ -40,6 +41,8 @@ module.exports = {
 
 	
 	}).catch(err => console.log(err));
+		
+	}
 	
 
 		for(i = 0; i< args; i++)
