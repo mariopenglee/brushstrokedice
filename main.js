@@ -59,7 +59,7 @@ if(!message.content.startsWith(prefix) || message.author.bot) return;
 	
 
 
-	if(argn>0 && argn<11)
+	if(argn>0 && argn<21)
 	{
 	results = roll(argn, pics, vchannel, results);
 	message.channel.send(results.join(''));
@@ -75,7 +75,7 @@ if(!message.content.startsWith(prefix) || message.author.bot) return;
 	}
 
 
-	if (command== 'reroll' || command== 'art' || command== 'rr')
+	if (command== 'reroll' || command== 'rr')
 	{
 	
 	if(results.length)

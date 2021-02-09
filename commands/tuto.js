@@ -26,10 +26,10 @@ function tuto(client, message, args, pics)
 	
 
 	actualtext.push('Brushstroke Dice are color-coded d10s, each color representing a result:');
-	actualtext.push(`${black}`+'Black Jade counts as nothing, ignore it when it comes up.');
-	actualtext.push(`${rose}`+'Rose Jade counts as a blossom, **or 1 success by taking 1 involvement**.');
-	actualtext.push(`${white}`+'White Jade counts as 1 success, **or 2 successes by taking 1 involvement**.');
-	actualtext.push(`${jade}`+'Pure Jade counts as 1 success and removes 1 involvement, **or 2 successes if no involvement**.');
+	actualtext.push(`${black}`+'Black Jade counts as 1 success with 1 involvement.');
+	actualtext.push(`${rose}`+'Rose Jade counts as a blossom.');
+	actualtext.push(`${white}`+'White Jade counts as 1 success.');
+	actualtext.push(`${jade}`+'Pure Jade removes 1 involvement. **if 0 involvement, counts as 2 successes.**');
 
 
 	message.channel.send(actualtext);
