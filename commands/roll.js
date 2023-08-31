@@ -1,62 +1,72 @@
 
-
-function roll(args, pics, vchannel, results)
+function roll(args, pics, results)
 	{
 	results = [' '];
 
-
-	
-
-	rollsound(vchannel, args);
 	strarg = JSON.stringify(args);
 	var i;
+	// generate random numbers
+	nums = [];
 	for(i = 0; i< args; i++)
 	{
-	results.push(`${pics[Math.floor(Math.random() * 10)]}`);
+	nums[i] = Math.floor(Math.random() * 10);
 	}
-	
-	
 
-
+	nums.sort(function(a, b){return a-b});
+	
+	for(i = 0; i< args; i++)
+	{
+	results.push(`${pics[nums[i]]}`);
+	}
 	return results;
 
 }
 
 
-function reroll(results, pics, args, message, vchannel)
+function reroll(results, pics, args, message)
 {
-var auxnum2 = 0;
+	var counter = 0;
 	if (args.length === 1) args = args[0].split('');
 	for (i = 0; i< args.length; i++)
 	{
-	
-	if(args[i]>results.length-1){auxnum2++;}
-	else
-	{
 	var auxnum = args[i];
 	if(auxnum==0){auxnum=10;}
+	if(auxnum>results.length-1){;}
+	else
+	{
 	results[auxnum] = pics[Math.floor(Math.random() * 10)];
+	counter++;
 	}
 	
 	}
-	rollsound(vchannel, args.length);
-	message.channel.send(args.length-auxnum2 + ' rerolls!');
+	message.channel.send(counter + ' rerolls!');
 
 	return results;
 	
 }
 
 
-function rollsound(vchannel, args)
-{
-
-	if(vchannel)
+function chipoff(results, args, message)
+{ // destroy dice
+	var counter = 0;
+	if (args.length === 1) args = args[0].split('');
+	for (i = 0; i< args.length; i++)
 	{
-			vchannel.join().then(connection =>{
-			if(args>4){	const dispatcher = connection.play('./misc/rolling.mp3');}
-			else{	const dispatcher = connection.play('./misc/lessroll.mp3');}}).catch(err => console.log(err));	
+		var auxnum = args[i];
+		if(auxnum==0){auxnum=10;}
+
+		if(auxnum>results.length-1){} // do nothing
+		else
+		{
+		results[auxnum] = 'd';
+		counter++;
+		}
 	}
-	
+	message.channel.send(counter + ' dice destroyed!');
+	results = results.filter(function (el) {
+	  return el != 'd';
+	});
+	return results;
 }
 
 
@@ -72,6 +82,7 @@ function rollsound(vchannel, args)
 module.exports = { 
 roll: roll,
 reroll: reroll,
+chipoff: chipoff,
  
 
 

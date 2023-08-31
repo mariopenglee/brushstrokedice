@@ -1,13 +1,6 @@
 function tuto(client, message, args, pics)
 	{
 
-
-	const white = client.emojis.cache.find(emoji => emoji.name === "white");
-	const black = client.emojis.cache.find(emoji => emoji.name === "black");
-	const rose = client.emojis.cache.find(emoji => emoji.name === "rose");
-	const jade = client.emojis.cache.find(emoji => emoji.name === "jade");
-	const red = client.emojis.cache.find(emoji => emoji.name === "red");
-
 	let lista = [' '];
 	lista.push(`${pics[1]}`);
 	lista.push(`${pics[2]}`);
@@ -24,17 +17,14 @@ function tuto(client, message, args, pics)
 
 	message.channel.send(lista.join(''));
 
-	
-
-	actualtext.push('Brushstroke Dice are color-coded d10s, each color representing a result');
-//	actualtext.push(`${red}`+'Blood Jade counts as nothing. ****');
-	actualtext.push(`${black}`+'Black Jade counts as 1 hit with 1 involvement. Or 2 hits if max involvement.');
-	actualtext.push(`${rose}`+'Rose Jade counts as a blossom.');
-	actualtext.push(`${white}`+'White Jade counts as 1 hit.');
-	actualtext.push(`${jade}`+'Pure Jade counts as 2 hits if **no** involvement, else *flows* or removes 1 involvement.');
+	actualtext.push('Brushstroke Dice are coded d10s, each face representing a result');
+	actualtext.push(`${pics[1]}`+'Black Jade counts as 1 hit with 1 involvement. Or 2 hits if max involvement.');
+	actualtext.push(`${pics[5]}`+'Rose Jade counts as a blossom.');
+	actualtext.push(`${pics[6]}`+'White Jade counts as 1 hit.');
+	actualtext.push(`${pics[0]}`+'Pure Jade counts as 2 hits if **no** involvement, else *flows* or removes 1 involvement.');
 
 
-	message.channel.send(actualtext);
+	message.channel.send(actualtext.join('\n'));
 
 
 
