@@ -59,7 +59,7 @@ client.on('messageCreate', (message) => {
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
     // Make sure there's someone in the voice channel
-    if (message.member.voice.channel) {
+    //if (message.member.voice.channel) {
         if (command == 'r' || command == 'roll') { 
             console.log(args);
             if (!args.length) {
@@ -135,26 +135,27 @@ client.on('messageCreate', (message) => {
             rounds = 0;
             message.delete();
         }
-    } else {
-        const player = createAudioPlayer();
-        const small_roll = createAudioResource('./misc/lessroll.mp3');
-        const big_roll = createAudioResource('./misc/rolling.mp3');
-        const connection = joinVoiceChannel({
-            channelId: message.member.voice.channel.id,
-            guildId: message.guild.id,
-            adapterCreator: message.guild.voiceAdapterCreator,
-        });
-        if (command == 'r' || command == 'roll') { 
-            var argn = Number(args);
-            if (argn > 0 && argn < 21) {
-                results = roll(argn, pics, results);
-                rollDict[message.author.id] = results;
-                message.reply(results.join(''));
-            } else {
-                message.reply('invalid input. Please enter a number between 1 and 20');
-            }
-        }
-    }
+    // } 
+    // else {
+    //     const player = createAudioPlayer();
+    //     const small_roll = createAudioResource('./misc/lessroll.mp3');
+    //     const big_roll = createAudioResource('./misc/rolling.mp3');
+    //     const connection = joinVoiceChannel({
+    //         channelId: message.member.voice.channel.id,
+    //         guildId: message.guild.id,
+    //         adapterCreator: message.guild.voiceAdapterCreator,
+    //     });
+    //     if (command == 'r' || command == 'roll') { 
+    //         var argn = Number(args);
+    //         if (argn > 0 && argn < 21) {
+    //             results = roll(argn, pics, results);
+    //             rollDict[message.author.id] = results;
+    //             message.reply(results.join(''));
+    //         } else {
+    //             message.reply('invalid input. Please enter a number between 1 and 20');
+    //         }
+    //     }
+    // }
 });
 
 // HTTP server to keep bot alive
