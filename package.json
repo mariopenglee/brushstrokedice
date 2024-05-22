@@ -15,6 +15,7 @@
     "dotenv": "^16.4.5",
     "ffmpeg-static": "^5.1.0",
     "g": "^2.0.1",
+    "http": "^0.0.1-security",
     "nodemon": "^3.0.1",
     "random-js": "^2.1.0",
     "sodium": "^3.0.2"
