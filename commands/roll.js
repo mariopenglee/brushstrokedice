@@ -1,8 +1,8 @@
 const { Random } = require('random-js');
 const random = new Random();
 
-function rolld10(args, picsd10) {
-    let resultsd10 = [' '];
+function roll(args, pics) {
+    let results = [' '];
     let nums = [];
 
     // generate random numbers
@@ -11,33 +11,15 @@ function rolld10(args, picsd10) {
     }
 
     // sort the numbers for readability
-    nums.sort((a, b) => a - b);
+    // nums.sort((a, b) => a - b);
 
     // add corresponding pictures
     for(let i = 0; i < args; i++) {
-        resultsd10.push(`${picsd10[nums[i]]}`);
+        results.push(`${pics[nums[i]]}`);
     }
-    return resultsd10;
+    return results;
 }
 
-function rolld6(args, picsd6) {
-    let resultsd6 = [' '];
-    let nums = [];
-
-    // generate random numbers
-    for(let i = 0; i < args; i++) {
-        nums[i] = random.integer(0, 5);
-    }
-
-    // sort the numbers for readability
-    nums.sort((a, b) => a - b);
-
-    // add corresponding pictures
-    for(let i = 0; i < args; i++) {
-        resultsd6.push(`${picsd6[nums[i]]}`);
-    }
-    return resultsd6;
-}
 
 function reroll(results, pics, args, message) {
     let counter = 0;
@@ -73,8 +55,7 @@ function chipoff(results, args, message) {
 }
 
 module.exports = { 
-    rolld10: rolld10,
-    rolld6: rolld6,
+    roll: roll,
     reroll: reroll,
     chipoff: chipoff,
 };

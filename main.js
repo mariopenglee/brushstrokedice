@@ -7,14 +7,12 @@ const prefix = '*';
 
 const fs = require('fs');
 
-var resultsd6 = {};
-var resultsd10 = {};
+var results = [' '];
 var rounds = 0;
 
 var pics = [' '];
-var picsd6 = [' '];
 var rollDict = {};
-var { rolld6, rolld10, reroll, chipoff } = require("./commands/roll.js");
+var { roll, reroll, chipoff } = require("./commands/roll.js");
 var { tuto } = require("./commands/tuto.js");
 
 const client = new Client({
@@ -33,23 +31,24 @@ client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
     client.user.setActivity('the Balance', { type: 'WATCHING' });
 
-    pics[1] = client.emojis.cache.find(emoji => emoji.name === "r1");
-    pics[2] = client.emojis.cache.find(emoji => emoji.name === "r2");
-    pics[3] = client.emojis.cache.find(emoji => emoji.name === "r3");
-    pics[4] = client.emojis.cache.find(emoji => emoji.name === "r4");
-    pics[5] = client.emojis.cache.find(emoji => emoji.name === "r5");
-    pics[6] = client.emojis.cache.find(emoji => emoji.name === "r6");
-    pics[7] = client.emojis.cache.find(emoji => emoji.name === "r7");
-    pics[8] = client.emojis.cache.find(emoji => emoji.name === "r8");
-    pics[9] = client.emojis.cache.find(emoji => emoji.name === "r9");
-    pics[0] = client.emojis.cache.find(emoji => emoji.name === "r0");
+    pics[1] = client.emojis.cache.find(emoji => emoji.name === "red");
+    pics[2] = client.emojis.cache.find(emoji => emoji.name === "black");
+    pics[3] = client.emojis.cache.find(emoji => emoji.name === "black");
+    pics[4] = client.emojis.cache.find(emoji => emoji.name === "black");
+    pics[5] = client.emojis.cache.find(emoji => emoji.name === "black");
+    pics[6] = client.emojis.cache.find(emoji => emoji.name === "white");
+    pics[7] = client.emojis.cache.find(emoji => emoji.name === "white");
+    pics[8] = client.emojis.cache.find(emoji => emoji.name === "white");
+    pics[9] = client.emojis.cache.find(emoji => emoji.name === "white");
+    pics[0] = client.emojis.cache.find(emoji => emoji.name === "jade");
 
-    picsd6[0] = client.emojis.cache.find(emoji => emoji.name === "w1");
-    picsd6[1] = client.emojis.cache.find(emoji => emoji.name === "w2");
-    picsd6[2] = client.emojis.cache.find(emoji => emoji.name === "w3");
-    picsd6[3] = client.emojis.cache.find(emoji => emoji.name === "w4");
-    picsd6[4] = client.emojis.cache.find(emoji => emoji.name === "w5");
-    picsd6[5] = client.emojis.cache.find(emoji => emoji.name === "w6");
+    // pics[1] = client.emojis.cache.find(emoji => emoji.name === "w1");
+    // pics[2] = client.emojis.cache.find(emoji => emoji.name === "w2");
+    // pics[3] = client.emojis.cache.find(emoji => emoji.name === "w3");
+    // pics[4] = client.emojis.cache.find(emoji => emoji.name === "w4");
+    // pics[5] = client.emojis.cache.find(emoji => emoji.name === "w5");
+    // pics[6] = client.emojis.cache.find(emoji => emoji.name === "w6");
+
 });
 
 client.on('messageCreate', (message) => {
@@ -59,27 +58,22 @@ client.on('messageCreate', (message) => {
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
     // Make sure there's someone in the voice channel
-    //if (message.member.voice.channel) {
+    if (!message.member.voice.channel) {
         if (command == 'r' || command == 'roll') { 
             console.log(args);
             if (!args.length) {
                 return message.channel.send(`You didn't provide any arguments, ${message.author}!`);
             }
-            var argn = args[0].split('k');
-            var ways = Number(argn[1]);
-            var mastery = Number(argn[0]) - ways;
-            if (mastery < 0) {
-                mastery = 0;
-                ways = Number(argn[0]);
-            }
-            console.log(ways);
-            if (Number(argn[0]) > 0 && Number(argn[0]) < 21) {
-                resultsd10 = rolld10(mastery, pics, resultsd10);
-                resultsd6 = rolld6(ways, picsd6, resultsd6);
-                message.reply(resultsd6.join('') + resultsd10.join(''));
+
+            var argn = Number(args);
+            if (argn > 0 && argn < 21) {
+                results = roll(argn, pics, results);
+                rollDict[message.author.id] = results;
+                message.reply(results.join(''));
             } else {
                 message.reply('invalid input. Please enter a number between 1 and 20');
             }
+
         }
         if (command == 'reroll' || command == 'rr') {
             if (rollDict[message.author.id]) {
@@ -135,27 +129,39 @@ client.on('messageCreate', (message) => {
             rounds = 0;
             message.delete();
         }
-    // } 
-    // else {
-    //     const player = createAudioPlayer();
-    //     const small_roll = createAudioResource('./misc/lessroll.mp3');
-    //     const big_roll = createAudioResource('./misc/rolling.mp3');
-    //     const connection = joinVoiceChannel({
-    //         channelId: message.member.voice.channel.id,
-    //         guildId: message.guild.id,
-    //         adapterCreator: message.guild.voiceAdapterCreator,
-    //     });
-    //     if (command == 'r' || command == 'roll') { 
-    //         var argn = Number(args);
-    //         if (argn > 0 && argn < 21) {
-    //             results = roll(argn, pics, results);
-    //             rollDict[message.author.id] = results;
-    //             message.reply(results.join(''));
-    //         } else {
-    //             message.reply('invalid input. Please enter a number between 1 and 20');
-    //         }
-    //     }
-    // }
+    } 
+    else {
+        console.log('in voice channel');
+        const player = createAudioPlayer();
+        const small_roll = createAudioResource('./misc/lessroll.mp3');
+        const big_roll = createAudioResource('./misc/rolling.mp3');
+        const connection = joinVoiceChannel({
+            channelId: message.member.voice.channel.id,
+            guildId: message.guild.id,
+            adapterCreator: message.guild.voiceAdapterCreator,
+        });
+        
+        if (command == 'r' || command == 'roll') { 
+            var argn = Number(args);
+            if (argn > 0 && argn < 21) {
+                results = roll(argn, pics, results);
+                rollDict[message.author.id] = results;
+
+                
+                if (argn < 6) {
+                    player.play(small_roll);
+                }
+                else {
+                    player.play(big_roll);
+                }
+                connection.subscribe(player);
+
+                message.reply(results.join(''));
+            } else {
+                message.reply('invalid input. Please enter a number between 1 and 20');
+            }
+        }
+    }
 });
 
 // HTTP server to keep bot alive
