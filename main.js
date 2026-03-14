@@ -11,8 +11,10 @@ var results = [' '];
 var rounds = 0;
 
 var pics = [' '];
+var diceEmojis = {};
 var rollDict = {};
 var { roll, reroll, chipoff } = require("./commands/roll.js");
+var { rollPool } = require("./commands/rollpool.js");
 var { tuto } = require("./commands/tuto.js");
 
 const client = new Client({
@@ -31,16 +33,16 @@ client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
     client.user.setActivity('the Balance', { type: 'WATCHING' });
 
-    pics[1] = client.emojis.cache.find(emoji => emoji.name === "red");
-    pics[2] = client.emojis.cache.find(emoji => emoji.name === "black");
-    pics[3] = client.emojis.cache.find(emoji => emoji.name === "black");
-    pics[4] = client.emojis.cache.find(emoji => emoji.name === "black");
-    pics[5] = client.emojis.cache.find(emoji => emoji.name === "black");
-    pics[6] = client.emojis.cache.find(emoji => emoji.name === "white");
-    pics[7] = client.emojis.cache.find(emoji => emoji.name === "white");
-    pics[8] = client.emojis.cache.find(emoji => emoji.name === "white");
-    pics[9] = client.emojis.cache.find(emoji => emoji.name === "white");
-    pics[0] = client.emojis.cache.find(emoji => emoji.name === "jade");
+    pics[1] = client.emojis.cache.find(emoji => emoji.name === "n1");
+    pics[2] = client.emojis.cache.find(emoji => emoji.name === "n2");
+    pics[3] = client.emojis.cache.find(emoji => emoji.name === "n3");
+    pics[4] = client.emojis.cache.find(emoji => emoji.name === "n4");
+    pics[5] = client.emojis.cache.find(emoji => emoji.name === "n5");
+    pics[6] = client.emojis.cache.find(emoji => emoji.name === "n6");
+    pics[7] = client.emojis.cache.find(emoji => emoji.name === "n7");
+    pics[8] = client.emojis.cache.find(emoji => emoji.name === "n8");
+    pics[9] = client.emojis.cache.find(emoji => emoji.name === "n9");
+    pics[0] = client.emojis.cache.find(emoji => emoji.name === "n0");
 
     // pics[1] = client.emojis.cache.find(emoji => emoji.name === "w1");
     // pics[2] = client.emojis.cache.find(emoji => emoji.name === "w2");
@@ -48,6 +50,14 @@ client.on('ready', () => {
     // pics[4] = client.emojis.cache.find(emoji => emoji.name === "w4");
     // pics[5] = client.emojis.cache.find(emoji => emoji.name === "w5");
     // pics[6] = client.emojis.cache.find(emoji => emoji.name === "w6");
+
+    diceEmojis['blank']       = client.emojis.cache.find(e => e.name === 'blank');
+    diceEmojis['cut']         = client.emojis.cache.find(e => e.name === 'cut');
+    diceEmojis['2cut']        = client.emojis.cache.find(e => e.name === '2cut');
+    diceEmojis['3cut']        = client.emojis.cache.find(e => e.name === '3cut');
+    diceEmojis['blossom']     = client.emojis.cache.find(e => e.name === 'blossom');
+    diceEmojis['2blossom']    = client.emojis.cache.find(e => e.name === '2blossom');
+    diceEmojis['blossom_cut'] = client.emojis.cache.find(e => e.name === 'blossom_cut');
 
 });
 
@@ -59,7 +69,18 @@ client.on('messageCreate', (message) => {
 
     // Make sure there's someone in the voice channel
     if (!message.member.voice.channel) {
-        if (command == 'r' || command == 'roll') { 
+        if (command == 'roll') {
+            if (!args.length) {
+                return message.channel.send(`Usage: \`*roll 2w 1m 1f 2r 1i\`\nDice types: **w**ay, **m**astery, **f**ortune, **r**isk, **i**njury`);
+            }
+            const poolResult = rollPool(args, diceEmojis);
+            if (!poolResult) {
+                return message.reply('invalid dice pool. Example: `*roll 2w 1m 1r`');
+            }
+            message.reply(poolResult);
+        }
+
+        if (command == 'r' || command == 'legacyroll') {
             console.log(args);
             if (!args.length) {
                 return message.channel.send(`You didn't provide any arguments, ${message.author}!`);
@@ -141,17 +162,32 @@ client.on('messageCreate', (message) => {
             adapterCreator: message.guild.voiceAdapterCreator,
         });
         
-        if (command == 'r' || command == 'roll') { 
+        if (command == 'roll') {
+            if (!args.length) {
+                return message.channel.send(`Usage: \`*roll 2w 1m 1f 2r 1i\`\nDice types: **w**ay, **m**astery, **f**ortune, **r**isk, **i**njury`);
+            }
+            const poolResult = rollPool(args, diceEmojis);
+            if (!poolResult) {
+                return message.reply('invalid dice pool. Example: `*roll 2w 1m 1r`');
+            }
+            const totalDice = args.reduce((sum, a) => {
+                const m = a.match(/^[wmfri]:(\d+)$/i);
+                return sum + (m ? parseInt(m[1]) : 0);
+            }, 0);
+            if (totalDice < 6) { player.play(small_roll); } else { player.play(big_roll); }
+            connection.subscribe(player);
+            message.reply(poolResult);
+        }
+
+        if (command == 'r' || command == 'legacyroll') {
             var argn = Number(args);
             if (argn > 0 && argn < 21) {
                 results = roll(argn, pics, results);
                 rollDict[message.author.id] = results;
 
-                
                 if (argn < 6) {
                     player.play(small_roll);
-                }
-                else {
+                } else {
                     player.play(big_roll);
                 }
                 connection.subscribe(player);
