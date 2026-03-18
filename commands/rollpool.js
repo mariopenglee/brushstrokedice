@@ -7,11 +7,11 @@ const random = new Random();
 const BLANK = 'blank';
 
 const DIE_FACES = {
-    w: [BLANK, BLANK, 'cut', 'blossom_cut', 'blossom', 'blossom'],
-    m: [BLANK, BLANK, BLANK, 'blossom', 'blossom', '2blossom'],
-    f: [BLANK, BLANK, BLANK, BLANK, 'blossom_cut', 'blossom'],
-    r: [BLANK, BLANK, BLANK, 'cut', 'cut', '2cut'],
-    i: [BLANK, BLANK, 'cut', 'cut', 'blossom_cut', '2blossom'],
+    w: [BLANK, BLANK, 'cut', 'blossom_cut', 'blossom', 'blossom'],                              // d6
+    m: [BLANK, BLANK, BLANK, 'blossom_cut', '2blossom', 'blossom', 'blossom', '2blossom'],      // d8
+    f: [BLANK, BLANK, BLANK, BLANK, 'blossom_cut', 'blossom'],                                   // d6
+    r: [BLANK, BLANK, BLANK, 'cut', 'cut', '2cut', '2cut', '2cut'],                             // d8
+    i: [BLANK, BLANK, 'cut', 'cut', 'blossom_cut', '2blossom'],                                  // d6
 };
 
 const DIE_LABELS = {
@@ -58,7 +58,7 @@ function rollPool(args, diceEmojis) {
         const faces = DIE_FACES[type];
         const rolls = [];
         for (let i = 0; i < count; i++) {
-            const face = faces[random.integer(0, 5)];
+            const face = faces[random.integer(0, faces.length - 1)];
             rolls.push(resolveEmoji(face));
             totalBlossoms += BLOSSOM_VALUE[face] || 0;
             totalCuts     += CUT_VALUE[face]     || 0;

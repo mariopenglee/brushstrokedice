@@ -7,7 +7,8 @@
       "Bash(timeout 5 node main.js 2>&1; true)",
       "Bash(timeout 8 node main.js; echo \"EXIT:$?\")",
       "Bash(node -e \"\nconst { rollPool } = require\\('./commands/rollpool.js'\\);\nconst result = rollPool\\(['2w', '1m', '2r'], { cut: ':cut:', '2cut': ':2cut:', blossom: ':blossom:', '2blossom': ':2blossom:', blossom_cut: ':blossom_cut:' }\\);\nconsole.log\\(result\\);\n\" 2>&1)",
-      "Bash(node -e \"\nconst { rollPool } = require\\('./commands/rollpool.js'\\);\nconst emojis = { cut: ':cut:', '2cut': ':2cut:', blossom: ':blossom:', '2blossom': ':2blossom:', blossom_cut: ':blossom_cut:' };\nconsole.log\\(rollPool\\(['2w', '1m', '1f', '2r', '1i'], emojis\\)\\);\n\" 2>&1)"
+      "Bash(node -e \"\nconst { rollPool } = require\\('./commands/rollpool.js'\\);\nconst emojis = { cut: ':cut:', '2cut': ':2cut:', blossom: ':blossom:', '2blossom': ':2blossom:', blossom_cut: ':blossom_cut:' };\nconsole.log\\(rollPool\\(['2w', '1m', '1f', '2r', '1i'], emojis\\)\\);\n\" 2>&1)",
+      "Bash(node -e \"\nconst { rollPool } = require\\('./commands/rollpool.js'\\);\nconst emojis = { blank: ':blank:', cut: ':cut:', '2cut': ':2cut:', blossom: ':blossom:', '2blossom': ':2blossom:', blossom_cut: ':blossom_cut:' };\nconsole.log\\(rollPool\\(['2w', '2m', '2r', '1f', '1i'], emojis\\)\\);\n\" 2>&1)"
     ]
   }
 }
