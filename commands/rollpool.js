@@ -7,26 +7,30 @@ const random = new Random();
 const BLANK = 'blank';
 
 const DIE_FACES = {
-    w: [BLANK, BLANK, 'cut', 'blossom_cut', 'blossom', 'blossom'],                              // d6
-    m: [BLANK, BLANK, BLANK, 'blossom_cut', '2blossom', 'blossom', 'blossom', '2blossom'],      // d8
-    f: [BLANK, BLANK, BLANK, BLANK, 'blossom_cut', 'blossom'],                                   // d6
-    r: [BLANK, BLANK, BLANK, 'cut', 'cut', '2cut', '2cut', '2cut'],                             // d8
-    i: [BLANK, BLANK, 'cut', 'cut', 'blossom_cut', '2blossom'],                                  // d6
+    w: [BLANK, BLANK, BLANK, 'blossom_cut', 'blossom_cut', 'blossom', 'blossom', '2blossom'],           // d8
+    a: [BLANK, BLANK, BLANK, BLANK, 'blossom', 'blossom'],                                      // d6
+    r: [BLANK, BLANK, BLANK, BLANK, 'cut', '2cut', '2cut', '2cut'],                             // d8
 };
 
 const DIE_LABELS = {
     w: 'Way',
-    m: 'Mastery',
-    f: 'Fortune',
+    a: 'Attribute',
     r: 'Risk',
-    i: 'Injury',
 };
 
 function rollPool(args, diceEmojis) {
-    // Parse args like ['2w', '1m', '1f', '2r', '1i']
+    // Parse args like ['2w', '3a', '4r'] or shorthand ['234'] meaning 2w 3a 4r
     const pool = {};
     for (const arg of args) {
-        const match = arg.match(/^(\d+)([wmfri])$/i);
+        const shorthand = arg.match(/^(\d)(\d)(\d)$/);
+        if (shorthand) {
+            const [, w, a, r] = shorthand.map(Number);
+            if (w > 0) pool['w'] = (pool['w'] || 0) + Math.min(w, 20);
+            if (a > 0) pool['a'] = (pool['a'] || 0) + Math.min(a, 20);
+            if (r > 0) pool['r'] = (pool['r'] || 0) + Math.min(r, 20);
+            continue;
+        }
+        const match = arg.match(/^(\d+)([war])$/i);
         if (match) {
             const type = match[2].toLowerCase();
             const count = Math.min(parseInt(match[1]), 20);
@@ -52,7 +56,7 @@ function rollPool(args, diceEmojis) {
     let totalBlossoms = 0;
     let totalCuts = 0;
 
-    for (const type of ['w', 'm', 'f', 'r', 'i']) {
+    for (const type of ['w', 'a', 'r']) {
         if (!pool[type]) continue;
         const count = pool[type];
         const faces = DIE_FACES[type];

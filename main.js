@@ -17,6 +17,9 @@ var { roll, reroll, chipoff } = require("./commands/roll.js");
 var { rollPool } = require("./commands/rollpool.js");
 var { tuto } = require("./commands/tuto.js");
 
+console.log('Starting bot...');
+console.log('TOKEN present:', !!process.env.TOKEN);
+
 const client = new Client({
     intents: [
         IntentsBitField.Flags.GuildEmojisAndStickers,
@@ -28,6 +31,8 @@ const client = new Client({
         IntentsBitField.Flags.GuildVoiceStates,
     ],
 });
+
+client.on('error', (err) => console.error('Client error:', err));
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
@@ -71,11 +76,11 @@ client.on('messageCreate', (message) => {
     if (!message.member.voice.channel) {
         if (command == 'roll') {
             if (!args.length) {
-                return message.channel.send(`Usage: \`*roll 2w 1m 1f 2r 1i\`\nDice types: **w**ay, **m**astery, **f**ortune, **r**isk, **i**njury`);
+                return message.channel.send(`Usage: \`*roll 2w 1a 2r\` or shorthand \`*roll 212\`\nDice types: **w**ay, **a**ttribute, **r**isk`);
             }
             const poolResult = rollPool(args, diceEmojis);
             if (!poolResult) {
-                return message.reply('invalid dice pool. Example: `*roll 2w 1m 1r`');
+                return message.reply('invalid dice pool. Example: `*roll 2w 1a 2r`');
             }
             message.reply(poolResult);
         }
@@ -164,14 +169,14 @@ client.on('messageCreate', (message) => {
         
         if (command == 'roll') {
             if (!args.length) {
-                return message.channel.send(`Usage: \`*roll 2w 1m 1f 2r 1i\`\nDice types: **w**ay, **m**astery, **f**ortune, **r**isk, **i**njury`);
+                return message.channel.send(`Usage: \`*roll 2w 1a 2r\` or shorthand \`*roll 212\`\nDice types: **w**ay, **a**ttribute, **r**isk`);
             }
             const poolResult = rollPool(args, diceEmojis);
             if (!poolResult) {
-                return message.reply('invalid dice pool. Example: `*roll 2w 1m 1r`');
+                return message.reply('invalid dice pool. Example: `*roll 2w 1a 2r`');
             }
             const totalDice = args.reduce((sum, a) => {
-                const m = a.match(/^[wmfri]:(\d+)$/i);
+                const m = a.match(/^(\d+)[war]$/i);
                 return sum + (m ? parseInt(m[1]) : 0);
             }, 0);
             if (totalDice < 6) { player.play(small_roll); } else { player.play(big_roll); }
@@ -207,8 +212,17 @@ const server = http.createServer((req, res) => {
     res.end('Bot is running\n');
 });
 
+server.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+        console.warn(`Port ${PORT} in use, bot running without HTTP server.`);
+    } else {
+        console.error('HTTP server error:', err.message);
+    }
+});
+
 server.listen(PORT, '0.0.0.0', () => {
     console.log(`Server is listening on port ${PORT}`);
 });
 
-client.login(process.env.TOKEN);
+console.log('Connecting to Discord...');
+client.login(process.env.TOKEN).catch(err => console.error('Login failed:', err.message));
